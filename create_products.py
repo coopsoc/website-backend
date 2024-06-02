@@ -86,8 +86,8 @@ def uploadProductVariants(baseProduct, sizesforColor):
 
 defaultSizes = ['s', 'm', 'l', 'xl']
 # defining product, sizes and colors
-sweatshirt = BaseProduct('sweatshirt', 'Sweatshirt', 'Relaxed fit Mid weight, 320 GSM 80% Cotton 20% recycled polyester fleece', '5000')
-sweatshirtColorsSizes = {
+crewneck = BaseProduct('crewneck', 'Crewneck', 'Relaxed fit Mid weight, 320 GSM 80% Cotton 20% recycled polyester fleece', '4900')
+crewneckColorsSizes = {
     'pine':{
         'images':[],
         'sizes':['m','l','xl'],
@@ -102,7 +102,7 @@ sweatshirtColorsSizes = {
     }
 }
 
-hoodie = BaseProduct('hoodie', 'Hoodie', 'Relaxed fit Mid weight, 320 GSM 80% Cotton 20% recycled polyester fleece', '5000')
+hoodie = BaseProduct('hoodie', 'Hoodie', 'Relaxed fit Mid weight, 320 GSM 80% Cotton 20% recycled polyester fleece', '5300')
 hoodieColorsSizes = {
     'pine':{
         'images':[],
@@ -118,7 +118,7 @@ hoodieColorsSizes = {
     }
 }
 
-tshirt= BaseProduct('tshirt', 'T-shirt', 'Regular fit Mid weight, 180 GSM 100% combed cotton (marles 15% viscose)', '5000')
+tshirt= BaseProduct('tshirt', 'T-shirt', 'Regular fit Mid weight, 180 GSM 100% combed cotton (marles 15% viscose)', '2800')
 tshirtColorsSizes = {
     'pine':{
         'images':[],
@@ -138,7 +138,7 @@ tshirtColorsSizes = {
     }
 }
 
-halfzip= BaseProduct('halfzip', 'Half-Zip', 'Regular fit Heavy weight, 350 GSM 80% cotton 20% recycled polyester anti-pill fleece', '5000')
+halfzip= BaseProduct('halfzip', 'Half-Zip', 'Regular fit Heavy weight, 350 GSM 80% cotton 20% recycled polyester anti-pill fleece', '4900')
 halfzipColorsSizes = {
     'powder':{
         'images':[],
@@ -155,7 +155,7 @@ halfzipColorsSizes = {
 }
 
 
-uploadProductVariants(sweatshirt, sweatshirtColorsSizes)
+uploadProductVariants(crewneck, crewneckColorsSizes)
 uploadProductVariants(hoodie, hoodieColorsSizes)
 uploadProductVariants(tshirt, tshirtColorsSizes)
 uploadProductVariants(halfzip, halfzipColorsSizes)
