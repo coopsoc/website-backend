@@ -1,5 +1,6 @@
 import stripe
-stripe.api_key = "sk_test_51PGdg7HTy0Cdu2FbkJXV5jx5ghPbjmLpPPvVVd1CSR5IbyovazKdB7BwGPiwJu1GPXTWyrEuIYbgTroYdWbJ7Sb900GztJ4miW"
+import urllib.parse
+stripe.api_key = "sk_test_51N7xWEKWz42bhxUE9IlRC3fuhsRAlLZr0fQdM3ScKIpNfSVtt477iLH4PcRVUT9byWOyIqVlYPtU8IFWdtni7HXR000adh4DDd"
 
 #Base class for product types e.g. hoodie, bag
 class BaseProduct:
@@ -77,81 +78,50 @@ class ProductVariant:
         # setting price as default
         productInstance.modify(self.getProductId(), default_price=priceInstance['id'])
 
+basePath = 'http://www.coopsoc.com.au/img/merch/2024/'
+#urllib.parse.quote()
+# crewneck%23black.png
 # uploading each variant
 def uploadProductVariants(baseProduct, sizesforColor):
     for color, data in sizesforColor.items():
-        for size in data['sizes']:
-            productVariant = ProductVariant(baseProduct, color, size, data['images'])
+        for size in data:
+            images = [ basePath + f'{baseProduct.getId()} #{color}.jpg', basePath + f'{baseProduct.getId()} #{color}b.jpg']
+            encodedImages = [urllib.parse.quote(image) for image in images]
+            print(images)
+            print(encodedImages)
+            productVariant = ProductVariant(baseProduct, color, size, encodedImages)
             productVariant.uploadProduct()
 
 defaultSizes = ['s', 'm', 'l', 'xl']
 # defining product, sizes and colors
 crewneck = BaseProduct('crewneck', 'Crewneck', 'Relaxed fit Mid weight, 320 GSM 80% Cotton 20% recycled polyester fleece', '4900')
 crewneckColorsSizes = {
-    'pine':{
-        'images':[],
-        'sizes':['m','l','xl'],
-    },
-    'black':{
-        'images':[],
-        'sizes':defaultSizes,
-    },
-    'grey':{
-        'images':[],
-        'sizes':defaultSizes,
-    }
+    'pine':['m','l','xl'],
+    'black':defaultSizes,
+    'grey':defaultSizes,
 }
+
 
 hoodie = BaseProduct('hoodie', 'Hoodie', 'Relaxed fit Mid weight, 320 GSM 80% Cotton 20% recycled polyester fleece', '5300')
 hoodieColorsSizes = {
-    'pine':{
-        'images':[],
-        'sizes':['m','l','xl'],
-    },
-    'black':{
-        'images':[],
-        'sizes':defaultSizes,
-    },
-    'grey':{
-        'images':[],
-        'sizes':defaultSizes,
-    }
+    'pine':['m','l','xl'],
+    'black':defaultSizes,
+    'grey':defaultSizes,
 }
 
 tshirt= BaseProduct('tshirt', 'T-shirt', 'Regular fit Mid weight, 180 GSM 100% combed cotton (marles 15% viscose)', '2800')
 tshirtColorsSizes = {
-    'pine':{
-        'images':[],
-        'sizes':['m','l','xl'],
-    },
-    'navy':{
-        'images':[],
-        'sizes':defaultSizes,
-    },
-    'cream':{
-        'images':[],
-        'sizes':defaultSizes,
-    },
-    'grey':{
-        'images':[],
-        'sizes':defaultSizes,
-    }
+    'pine':['m','l','xl'],
+    'navy':defaultSizes,
+    'cream':defaultSizes,
+    'grey':defaultSizes,
 }
 
 halfzip= BaseProduct('halfzip', 'Half-Zip', 'Regular fit Heavy weight, 350 GSM 80% cotton 20% recycled polyester anti-pill fleece', '4900')
 halfzipColorsSizes = {
-    'powder':{
-        'images':[],
-        'sizes':defaultSizes,
-    },
-    'black':{
-        'images':[],
-        'sizes':defaultSizes,
-    },
-    'cream':{
-        'images':[],
-        'sizes':defaultSizes,
-    }
+    'powder':defaultSizes,
+    'black':defaultSizes,
+    'cream':defaultSizes,
 }
 
 
