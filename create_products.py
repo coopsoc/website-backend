@@ -85,7 +85,7 @@ basePath = 'http://www.coopsoc.com.au/img/merch/2024/'
 def uploadProductVariants(baseProduct, sizesforColor):
     for color, data in sizesforColor.items():
         for size in data:
-            images = [ basePath + f'{baseProduct.getId()} #{color}.jpg', basePath + f'{baseProduct.getId()} #{color}b.jpg']
+            images = [ basePath + f'{baseProduct.getId()} #{color}.png', basePath + f'{baseProduct.getId()} #{color}b.jpg']
             encodedImages = [urllib.parse.quote(image) for image in images]
             print(images)
             print(encodedImages)
