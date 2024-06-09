@@ -78,7 +78,7 @@ class ProductVariant:
         # setting price as default
         productInstance.modify(self.getProductId(), default_price=priceInstance['id'])
 
-basePath = 'http://www.coopsoc.com.au/img/merch/2024/'
+basePath = 'https://www.coopsoc.com.au/img/merch/2024/'
 #urllib.parse.quote()
 # crewneck%23black.png
 # uploading each variant
