@@ -1,6 +1,6 @@
 import stripe
 import urllib.parse
-stripe.api_key = "sk_test_51N7xWEKWz42bhxUE9IlRC3fuhsRAlLZr0fQdM3ScKIpNfSVtt477iLH4PcRVUT9byWOyIqVlYPtU8IFWdtni7HXR000adh4DDd"
+stripe.api_key = "sk_test_51N7xWEKWz42bhxUEwxn8DTw87BwXFBW9zp8FeEAnZR5y71JS6QQ0a15twkRspNUvTVynTPjIgZnrUj0YBKyrdnc700js5ste13"
 
 #Base class for product types e.g. hoodie, bag
 class BaseProduct:
