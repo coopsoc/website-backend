@@ -1,12 +1,7 @@
 import "dotenv-defaults/config";
 import cors from "cors";
+import errorHandler from "middleware-http-errors";
 import express, { json, Request, Response } from "express";
-
-// For type narrowing
-const envVars = ["IP", "PORT", "CLIENT_URL", "STRIPE_PUBLISHABLE_KEY", "STRIPE_SECRET_KEY"];
-if (envVars.some((e) => process.env[e] === undefined)) {
-  throw "Environment variables not set, see .env.example"
-}
 
 const app = express();
 app.use(json());
@@ -19,58 +14,28 @@ const stripe = require("stripe")(
   process.env.STRIPE_PRIVATE_KEY
 );
 
+// TODO type narrow other env variables
+// Can't just use a .some/.every over a list of strings e.g. ["PORT", "HOST"] + in, see:
+//  https://github.com/microsoft/TypeScript/issues/43284
+if (process.env.PORT === undefined || process.env.IP === undefined) {
+  // Should never happen due to dotenv-defaults. Plausible for stripe keys though
+  throw "Environment variable(s) PORT or IP not set";
+}
 const PORT: number = parseInt(process.env.PORT);
 const HOST: string = process.env.IP;
 
-//Item map for store items
-const storeItems = new Map([
-  ["hoodie-sm", { priceInCents: 50000, name: "Small Hoodie" }],
-  ["hoodie-lg", { priceInCents: 50000, name: "Large Hoodie" }],
-]);
+app.post('/v1/merch/checkout_sessions.js', (req: Request, res: Response) => {
+  //! TODO - param is return_url
+  const ret = merchCreateCheckoutSession(req.headers.origin as string);
+  return res.json(ret);
+});
 
-//handling create checkout request
-app.post('/create-checkout-session', async (request, response) => {
-  try{
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode:'payment',
-      line_items: request.body.items.map(item=>{
-        const storeItem= storeItems.get(item.id)
-        return {
-          price_data: {
-            currency: 'aud',
-            product_data: {
-              name: storeItem.name,
-          },
-          unit_amount: storeItem.priceInCents
-        },
-        quantity: item.quantity
+app.get('/v1/merch/checkout_sessions.js', (req: Request, res: Response) => {
+  const ret = merchRetrieveCheckoutSession(req.query.session_id as string);
+  return res.json(ret);
+});
 
-      }}),
-      success_url: `${process.env.CLIENT_URL}/success.html`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel.html`
-    })
-    console.log(session.url);
-    response.json({url: session.url})
-  }
-  catch(e){
-    response.status(500).json({error: e.message})
-  }
-})
-app.listen(3000)
-
-
-
-// const session = await stripe.checkout.sessions.create({
-//   payment_method_types: ["card"],
-//   mode: "payment",
-//   success_url: "http://www.google.com",
-//   cancel_url: "http://www.google.com",
-// });
-// console.log(session.url)
-// async function getProducts() {
-//     const products = await stripe.products.list().then(products=>{return products});
-// }
-
-
-
+app.use(errorHandler());
+app.listen(PORT, HOST, () => {
+  console.log(`Server started on port ${PORT} at ${HOST}`);
+});
