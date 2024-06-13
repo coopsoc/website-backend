@@ -3,19 +3,36 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "tsc": "tsc --project tsconfig.json",
+    "lint": "eslint src/**/*.{ts,js} tests/**/*.ts",
+    "lint-fix": "eslint --fix src/**/*.{ts,js} tests/**/*.ts",
+    "start": "ts-node -T src/server.ts",
+    "dev": "ts-node-dev src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "This repository houses the source code for the Express.js backend/API of the UNSW Co-op Society's website, hosted at [https://coopsoc.com.au](https://coopsoc.com.au) and written in [Next.js](https://nextjs.org). Visit our website and explore around!",
+  "bugs": {
+    "url": "https://github.com/coopsoc/website-backend/issues"
+  },
+  "homepage": "https://github.com/coopsoc/website-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv-defaults": "^5.0.2",
     "express": "^4.19.2",
-    "stripe": "^15.7.0"
+    "stripe": "^15.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.2",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0",
+    "ts-node-dev": "^2.0.0"
   }
 }
