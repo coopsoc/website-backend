@@ -1,16 +1,26 @@
-require('dotenv').config()//loads all environment variables
-const express = require('express')//initialize express
-const app = express()
-const cors = require('cors')
-app.use(express.json())
+import "dotenv-defaults/config";
+import cors from "cors";
+import express, { json, Request, Response } from "express";
+
+// For type narrowing
+const envVars = ["IP", "PORT", "CLIENT_URL", "STRIPE_PUBLISHABLE_KEY", "STRIPE_SECRET_KEY"];
+if (envVars.some((e) => process.env[e] === undefined)) {
+  throw "Environment variables not set, see .env.example"
+}
+
+const app = express();
+app.use(json());
 app.use(cors({
-  //only accept requests from
-  origin: "http://localhost:5500"
-}))
+  // Only accept requests from
+  origin: process.env.CLIENT_URL
+}));
 
 const stripe = require("stripe")(
   process.env.STRIPE_PRIVATE_KEY
 );
+
+const PORT: number = parseInt(process.env.PORT);
+const HOST: string = process.env.IP;
 
 //Item map for store items
 const storeItems = new Map([
